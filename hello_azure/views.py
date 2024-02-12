@@ -17,7 +17,7 @@ def hello(request):
 
             # Replace "text-davinci-002" with the model you want to use
             response = openai.Completion.create(
-              engine="text-davinci-002",
+              engine="gpt3.5-turbo",
               prompt=f"Say hello to {name}",
               max_tokens=50
             )
