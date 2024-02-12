@@ -13,11 +13,11 @@ def hello(request):
             print("Request for hello page received with name=%s" % name)
 
             # Configure OpenAI with your API key
-            openai.api_key = settings.OPENAI_API_KEY
+            openai.api_key = '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'#settings.OPENAI_API_KEY
 
             # Replace "text-davinci-002" with the model you want to use
             response = openai.Completion.create(
-              engine="gpt3.5-turbo",
+              engine="gpt-3.5-turbo",
               prompt=f"Say hello to {name}",
               max_tokens=50
             )
