@@ -24,6 +24,8 @@ def hello(request):
 
             # Extract the response text
             message = response.choices[0].text.strip()
+            if not message:
+                message = response
 
             context = {'name': name, 'message': message}
             return render(request, 'hello_azure/hello.html', context)
