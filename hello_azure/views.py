@@ -8,6 +8,7 @@ import traceback
 def get_gpt_response(prompt):
     # gets API Key from environment variable OPENAI_API_KEY
     client = OpenAI()
+    print(prompt)
 
     # Non-streaming:
     print("----- standard request -----")
@@ -20,8 +21,9 @@ def get_gpt_response(prompt):
             },
         ],
     )
-    print(completion.choices[0].message.content)
-    return completion.choices[0].message.content
+    print(completion)
+    #print(completion.choices[0].message.content)
+    return "cheese"#completion.choices[0].message.content
 def index(request):
     print('Request for index page received')
     return render(request, 'hello_azure/index.html')
