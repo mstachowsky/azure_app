@@ -2,6 +2,11 @@ import openai
 from django.conf import settings
 
 
+def index(request):
+    print('Request for index page received')
+    return render(request, 'hello_azure/index.html')
+
+
 def hello(request):
     if request.method == 'POST':
         name = request.POST.get('name')
