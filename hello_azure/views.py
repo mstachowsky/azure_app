@@ -23,7 +23,7 @@ def get_gpt_response(prompt):
     )
     print(completion.choices[0].message.content)
     #print(completion.choices[0].message.content)
-    return "cheese"#completion.choices[0].message.content
+    return completion.choices[0].message.content
 def index(request):
     print('Request for index page received')
     return render(request, 'hello_azure/index.html')
