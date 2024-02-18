@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import openai
 import os
+import traceback
 def index(request):
     print('Request for index page received')
     return render(request, 'hello_azure/index.html')
@@ -17,18 +18,19 @@ def hello(request):
             return redirect('index')
         else:
             openai.api_key = os.environ['OPENAI_API_KEY']
-            response = openai.Completion.create(
-              engine="gpt-3.5-turbo",
-              prompt=f"Say hello to {name}",
-              max_tokens=50
-            )
-            
+           
+            prompt=f"Say hello to {name}",
+            response = openai.ChatCompletion.create(model="gpt-3.5-turbo",messages=[{"role":"user","content":prompt}],temperature=0.1)
             #settings.OPENAI_API_KEY
-            message = response.choices[0].text.strip()
-            if not message:
-                message = response
+            message = 'fail'
+            try:
+                message = response.choices[0].text.strip()
+                if not message:
+                    message = response
 
-            context = {'name': name, 'message': message}
+                context = {'name': name, 'message': message}
+            except:
+                traceback.print_exc()
             print("Request for hello page received with name=%s" % message)
             #context = {'name': name }
             return render(request, 'hello_azure/hello.html', context)
