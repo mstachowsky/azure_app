@@ -16,9 +16,21 @@ def hello(request):
             print("Request for hello page received with no name or blank name -- redirecting")
             return redirect('index')
         else:
-            openai.api_key = os.environ['OPENAI_API_KEY']#settings.OPENAI_API_KEY
-            print("Request for hello page received with name=%s" % name)
-            context = {'name': name }
+            openai.api_key = os.environ['OPENAI_API_KEY']
+            response = openai.Completion.create(
+              engine="gpt-3.5-turbo",
+              prompt=f"Say hello to {name}",
+              max_tokens=50
+            )
+            
+            #settings.OPENAI_API_KEY
+            message = response.choices[0].text.strip()
+            if not message:
+                message = response
+
+            context = {'name': name, 'message': message}
+            print("Request for hello page received with name=%s" % message)
+            #context = {'name': name }
             return render(request, 'hello_azure/hello.html', context)
     else:
         return redirect('index')
