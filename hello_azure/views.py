@@ -13,17 +13,19 @@ def hello(request):
             print("Request for hello page received with name=%s" % name)
 
             # Configure OpenAI with your API key
-            openai.api_key = process.env.OPENAI_API_KEY#settings.OPENAI_API_KEY
+            #openai.api_key = process.env.OPENAI_API_KEY#settings.OPENAI_API_KEY
 
             # Replace "text-davinci-002" with the model you want to use
+            """
             response = openai.Completion.create(
               engine="gpt-3.5-turbo",
               prompt=f"Say hello to {name}",
               max_tokens=50
             )
+            """
 
             # Extract the response text
-            message = response.choices[0].text.strip()
+            message = "Cheese"#response.choices[0].text.strip()
             if not message:
                 message = response
 
