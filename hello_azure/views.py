@@ -4,7 +4,7 @@ from django.conf import settings
 
 def index(request):
     print('Request for index page received')
-    return render(request, 'hello_azure/index.html')
+    return render(request, 'templates/hello_azure/index.html')
 
 
 def hello(request):
@@ -35,6 +35,6 @@ def hello(request):
                 message = response
 
             context = {'name': name, 'message': message}
-            return render(request, 'hello_azure/hello.html', context)
+            return render(request, 'templates/hello_azure/hello.html', context)
     else:
         return redirect('index')
