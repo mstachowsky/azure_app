@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+import openai
 
 def index(request):
     print('Request for index page received')
@@ -15,9 +16,26 @@ def hello(request):
             print("Request for hello page received with no name or blank name -- redirecting")
             return redirect('index')
         else:
+            openai.api_key = process.env.OPENAI_API_KEY#settings.OPENAI_API_KEY
+            
             print("Request for hello page received with name=%s" % name)
             context = {'name': name }
+            
+            response = openai.Completion.create(
+              engine="gpt-3.5-turbo",
+              prompt=f"Say hello to {name}",
+              max_tokens=50
+            )
+            
+
+            # Extract the response text
+            message = response.choices[0].text.strip()
+            if not message:
+                message = response
+
+            context = {'name': name, 'message': message}
             return render(request, 'hello_azure/hello.html', context)
+            
     else:
         return redirect('index')
 
