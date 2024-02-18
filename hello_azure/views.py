@@ -17,7 +17,7 @@ def get_gpt_response(prompt):
         messages=[
             {
                 "role": "user",
-                "content": "Hi!",#prompt,
+                "content": prompt,
             },
         ],
     )
@@ -39,7 +39,7 @@ def hello(request):
         else:
             #openai.api_key = os.environ['OPENAI_API_KEY']
            
-            prompt=f"Say hello to {name}",
+            prompt=f"Say hello to {name}"
             #settings.OPENAI_API_KEY
             message = 'fail'
             try:
