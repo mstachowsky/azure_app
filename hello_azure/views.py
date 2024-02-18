@@ -21,7 +21,7 @@ def get_gpt_response(prompt):
             },
         ],
     )
-    print(completion)
+    print(completion.choices[0].message.content)
     #print(completion.choices[0].message.content)
     return "cheese"#completion.choices[0].message.content
 def index(request):
@@ -46,8 +46,6 @@ def hello(request):
                 #response = openai.ChatCompletion.create(model="gpt-3.5-turbo",messages=[{"role":"user","content":prompt}],temperature=0.1)
                 
                 message = get_gpt_response(prompt)#response.choices[0].text.strip()
-                if not message:
-                    message = response
 
                 context = {'name': name, 'message': message}
             except:
