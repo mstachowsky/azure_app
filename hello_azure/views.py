@@ -20,10 +20,11 @@ def hello(request):
             openai.api_key = os.environ['OPENAI_API_KEY']
            
             prompt=f"Say hello to {name}",
-            response = openai.ChatCompletion.create(model="gpt-3.5-turbo",messages=[{"role":"user","content":prompt}],temperature=0.1)
             #settings.OPENAI_API_KEY
             message = 'fail'
             try:
+                response = openai.ChatCompletion.create(model="gpt-3.5-turbo",messages=[{"role":"user","content":prompt}],temperature=0.1)
+            
                 message = response.choices[0].text.strip()
                 if not message:
                     message = response
