@@ -1,7 +1,7 @@
 import openai
 from django.conf import settings
 
-@csrf_exempt
+
 def hello(request):
     if request.method == 'POST':
         name = request.POST.get('name')
