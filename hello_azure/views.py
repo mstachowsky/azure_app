@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import openai
-
+import os
 def index(request):
     print('Request for index page received')
     return render(request, 'hello_azure/index.html')
@@ -16,7 +16,7 @@ def hello(request):
             print("Request for hello page received with no name or blank name -- redirecting")
             return redirect('index')
         else:
-            openai.api_key = process.env.OPENAI_API_KEY#settings.OPENAI_API_KEY
+            openai.api_key = os.environ['OPENAI_API_KEY']#settings.OPENAI_API_KEY
             print("Request for hello page received with name=%s" % name)
             context = {'name': name }
             return render(request, 'hello_azure/hello.html', context)
