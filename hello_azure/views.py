@@ -17,7 +17,7 @@ def get_gpt_response(prompt):
         messages=[
             {
                 "role": "user",
-                "content": prompt,
+                "content": "Hi!",#prompt,
             },
         ],
     )
