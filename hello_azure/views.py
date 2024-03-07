@@ -62,7 +62,7 @@ def hello(request):
             try:
                 #response = openai.ChatCompletion.create(model="gpt-3.5-turbo",messages=[{"role":"user","content":prompt}],temperature=0.1)
                 
-                message = get_gpt_response(prompt) + list_blobs_in_container("rubrics")#response.choices[0].text.strip()
+                message = get_gpt_response(prompt) + "".join(list_blobs_in_container("rubrics"))#response.choices[0].text.strip()
 
                 context = {'name': name, 'message': message}
             except:
