@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 from openai import OpenAI
 import os
 import traceback
@@ -24,9 +25,25 @@ def get_gpt_response(prompt):
     print(completion.choices[0].message.content)
     #print(completion.choices[0].message.content)
     return completion.choices[0].message.content
+
 def index(request):
     print('Request for index page received')
     return render(request, 'hello_azure/index.html')
+
+def list_blobs_in_container(container_name):
+    # Fetch the connection string from an environment variable
+    connect_str = os.getenv('AZURE_STORAGE_CONNECTION_STRING')
+
+    # Instantiate a BlobServiceClient using the connection string
+    blob_service_client = BlobServiceClient.from_connection_string(connect_str)
+
+    # Instantiate a ContainerClient
+    container_client = blob_service_client.get_container_client(container_name)
+
+    # List all blobs in the container and return their names
+    blob_names = [blob.name for blob in container_client.list_blobs()]
+    return blob_names
+
 
 @csrf_exempt
 def hello(request):
@@ -45,7 +62,7 @@ def hello(request):
             try:
                 #response = openai.ChatCompletion.create(model="gpt-3.5-turbo",messages=[{"role":"user","content":prompt}],temperature=0.1)
                 
-                message = get_gpt_response(prompt)#response.choices[0].text.strip()
+                message = get_gpt_response(prompt) + list_blobs_in_container("rubrics")#response.choices[0].text.strip()
 
                 context = {'name': name, 'message': message}
             except:

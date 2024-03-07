@@ -1,3 +1,4 @@
 Django
 whitenoise
 openai
+azure-storage-blob
